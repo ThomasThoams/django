@@ -1,0 +1,11 @@
+<h1>Invoice Detail</h1>
+<p>Nom: {{ invoice.name }}</p>
+<p>Client: {{ invoice.client }}</p>
+<p>Category: {{ invoice.category }}</p>
+<p>Amount: {{ invoice.amount }}</p>
+<p>Description: {{ invoice.description }}</p>
+<p>Date: {{ invoice.date }}</p>
+<p>Paid: {{ invoice.paid }}</p>
+<a href="{% url 'invoice_update' invoice.pk %}">Edit</a>
+<a href="{% url 'invoice_delete' invoice.pk %}">Delete</a>
+<a href="{% url 'invoice_list' %}">Back to list</a>
