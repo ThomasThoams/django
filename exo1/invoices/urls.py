@@ -1,4 +1,5 @@
-from django.urls import path
+# urls.py
+from django.urls import path, include
 from . import views
 
 urlpatterns = [
@@ -9,4 +10,6 @@ urlpatterns = [
     path('invoice/<int:pk>/delete/', views.invoice_delete, name='invoice_delete'),
     path('category/new/', views.category_create, name='category_create'),
     path('client/new/', views.client_create, name='client_create'),
+    path('accounts/', include('django.contrib.auth.urls')),  # Ajoute les URLs d'authentification par défaut de Django
+    path('signup/', views.signup, name='signup'),  # Pour l'inscription des utilisateurs
 ]
