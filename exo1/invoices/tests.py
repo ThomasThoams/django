@@ -1,7 +1,7 @@
 # tests.py
 from django.test import TestCase
 from django.urls import reverse
-from .models import Invoice, Client, Category
+from .models import Invoice, Client, Category, InvoiceCreationLog
 from datetime import date
 
 class InvoiceModelTest(TestCase):
@@ -134,3 +134,22 @@ class InvoiceDeleteViewTest(TestCase):
         response = self.client.post(reverse('invoice_delete', args=[self.invoice.pk]))
         self.assertEqual(response.status_code, 302)  # Redirect after success
         self.assertEqual(Invoice.objects.count(), 0)
+
+class InvoiceCreationLogTest(TestCase):
+    def setUp(self):
+        self.client_obj = Client.objects.create(name="Test Client", email="test@example.com")
+        self.category = Category.objects.create(name="Test Category")
+
+    def test_invoice_creation_log(self):
+        invoice = Invoice.objects.create(
+            name="Logged Invoice",
+            client=self.client_obj,
+            category=self.category,
+            amount=700.00,
+            description="Log this creation",
+            date=date.today(),
+            paid=False
+        )
+        log = InvoiceCreationLog.objects.filter(invoice=invoice).first()
+        self.assertIsNotNone(log)
+        self.assertEqual(log.invoice.name, "Logged Invoice")

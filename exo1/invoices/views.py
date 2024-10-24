@@ -78,3 +78,11 @@ def client_create(request):
     else:
         form = ClientForm()
     return render(request, 'invoices/client_form.html', {'form': form})
+
+def paid_invoices_view(request):
+    paid_invoices = Invoice.objects.paid_invoices()
+    return render(request, 'invoices/paid_invoices.html', {'invoices': paid_invoices})
+
+def unpaid_invoices_view(request):
+    unpaid_invoices = Invoice.objects.unpaid_invoices()
+    return render(request, 'invoices/unpaid_invoices.html', {'invoices': unpaid_invoices})
