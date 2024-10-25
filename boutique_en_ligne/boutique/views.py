@@ -3,6 +3,7 @@ from .models import Article, Categorie, Panier, PanierArticle
 from .forms import InscriptionForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 
 def accueil(request):
     categories_parents = Categorie.objects.filter(parent__isnull=True)
@@ -51,7 +52,10 @@ def article_detail(request, pk):
 @login_required
 def ajouter_au_panier(request, pk):
     article = get_object_or_404(Article, pk=pk)
-    panier = request.user.panier
+    try:
+        panier = request.user.panier
+    except ObjectDoesNotExist:
+        panier = Panier.objects.create(utilisateur=request.user)
     panier_article, created = PanierArticle.objects.get_or_create(panier=panier, article=article)
     if not created:
         panier_article.quantite += 1
@@ -60,22 +64,35 @@ def ajouter_au_panier(request, pk):
 
 @login_required
 def panier(request):
-    panier = request.user.panier
+    try:
+        panier = request.user.panier
+    except ObjectDoesNotExist:
+        panier = Panier.objects.create(utilisateur=request.user)
     articles = panier.panierarticle_set.all()
     total = sum([item.article.prix * item.quantite for item in articles])
     return render(request, 'boutique/panier.html', {'articles': articles, 'total': total})
 
+
 @login_required
 def retirer_du_panier(request, pk):
     article = get_object_or_404(Article, pk=pk)
-    panier = request.user.panier
+    try:
+        panier = request.user.panier
+    except ObjectDoesNotExist:
+        # Si l'utilisateur n'a pas de panier, rien à retirer
+        return redirect('panier')
     panier_article = get_object_or_404(PanierArticle, panier=panier, article=article)
     panier_article.delete()
     return redirect('panier')
 
+
 @login_required
 def payer(request):
-    panier = request.user.panier
+    try:
+        panier = request.user.panier
+    except ObjectDoesNotExist:
+        # Si l'utilisateur n'a pas de panier, rien à payer
+        return redirect('accueil')
     panier.panierarticle_set.all().delete()
     return redirect('accueil')
 
