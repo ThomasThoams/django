@@ -1,128 +1,31 @@
-{% extends 'boutique/boutique/base.html' %}
+{% extends 'boutique/base.html' %}
 {% load mptt_tags %}
 
-{% load mptt_tags %}
-
-{% block title %}Accueil - Accueil - Boutique de Vêtements{% endblock %}
-
+{% block title %}Accueil - Boutique de Vêtements{% endblock %}
 
 {% block content %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Boutique de Vêtements</title>
-    <link rel="stylesheet" href="{% static 'bulma/css/bulma.css' %}">
-</head>
-<body>
-    <header>
-        <nav class="navbar is-black">
-            <div class="navbar-brand">
-                <img src="{% static "portea.jpg" %}%}" alt="logo boutique">
-            </div>
-            <div class="navbar-end">
-                {% if user.is_authenticated %}
-                    <a href="{% url 'panier' %}"        class="navbar-item"> Panier      </a>
-                    <a href="{% url 'compte' %}"        class="navbar-item"> Mon compte  </a>
-                    <a href="{% url 'deconnexion' %}"   class="navbar-item"> Déconnexion </a>
-                {% else %}
-                    <a href="{% url 'connexion' %}"     class="navbar-item"> Connexion   </a>
-                    <a href="{% url 'inscription' %}"   class="navbar-item"> Inscription </a>
-                {% endif %}
-            </div>
-        </nav>
+    <!-- Le contenu spécifique à la page d'accueil -->
+    <h2 class="title is-size-2">Catégories</h2>
+    <ul>
+        <li>
+            <a href="{% url 'accueil' %}"> Toutes </a>
+        </li>
+        {% include 'boutique/categorie_recursive.html' with categories=categories_parents %}
+    </ul>
 
-        <h1 class="title has-text-centered"> Bienvenue dans notre boutique en ligne </h1>
-    </header>
-        <br><br><br>
-    <div class="is-flex is-flex-direction-column" style="gap:20px;">
-        <div class="box m-auto" style="width:fit-content;">
-            <h2 class="title is-size-2">Catégories</h2>
-            <ul>
-                <li>
-                    <a href="{% url 'accueil' %}" class="button is-link is-outlined"> Toutes </a>
-                </li>
-                {% include 'boutique/categorie_recursive.html' with categories=categories_parents %}
-
-                <h2 class="title is-size-2"> Catégories </h2>
-                
-                <ul class="is-flex is-flex-wrap-wrap is-justify-content-center is-align-items-baseline">
-                    {% recursetree categories_parents %}
-                        <li>
-                            <a href="{% url 'accueil' %}?categorie={{ node.id }}">{{ node.nom }}</a>
-                            {% if not node.is_leaf_node %}
-                                <ul>
-                                    {{ children }}
-                                </ul>
-                            {% endif %}
-                        </li>
-                    {% endrecursetree %}
-
-                </ul>
-            </ul>
-        </div>
-            <br><br>
-        <div class="container">
-            <h2 class="title is-size-2 has-text-centered"> Articles </h2>
-            <div class="is-flex is-flex-wrap-wrap is-justify-content-start is-align-items-center">
-                {% for article in articles %}
-                    <div class="card">
-                        <div class="card-image">
-                            <figure class="image is-4by3">
-                                {% if article.image %}
-                                    <img src="{{ article.image.url }}" alt="{{ article.nom }}"/>
-                                {% endif %}
-                            </figure>
-                        </div>
-                            <div class="card-content">
-                                <div class="media">
-                                    <div class="media-left">
-                                </div>
-                                <div class="media-content">
-                                    <p class="title is-4">
-                                        <a href="{% url 'article_detail' article.id %}">
-                                            {{ article.nom }} - {{ article.prix }}€
-                                        </a>
-                                    </p>
-                                </div>
-                            </div>
-                    
-                            <div class="content">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus neciaculis mauris.
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus neciaculis mauris.
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus neciaculis mauris.
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus neciaculis mauris.
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus neciaculis mauris.
-                            </div>
-                        </div>
-                    </div>
-                    {% empty %}
-                    <article class="message is-warning m-auto">
-                        <div class="message-header">
-                            <p>Warning</p>
-                        </div>
-                        <div class="message-body">
-                            Aucun Article n'est disponnible Pour Le moment
-                        </div>
-                    </article>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-
-
-
-    <footer class="footer">
-        <div class="content has-text-centered">
-            <p>
-                <strong> Bulma </strong> by <a href="https://jgthms.com">Jeremy Thomas</a>.
-                The source code is licensed
-                <a href="https://opensource.org/license/mit">MIT</a>.
-                The website content is licensed
-                <a href="https://creativecommons.org/licenses/by-nc-sa/4.0//">
-                    CC BY NC SA 4.0
-                </a>.
-            </p>
-        </div>
-    </footer>
-</body>
-</html>
+    <h2 class="title is-size-2"> Articles </h2>
+    <ul>
+        {% for article in articles %}
+            <li>
+                <a href="{% url 'article_detail' article.id %}">
+                    {% if article.image %}
+                        <img src="{{ article.image.url }}" alt="{{ article.nom }}" width="100">
+                    {% endif %}
+                    {{ article.nom }} - {{ article.prix }}€
+                </a>
+            </li>
+        {% empty %}
+            <li>Aucun article disponible.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
