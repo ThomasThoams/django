@@ -1,0 +1,47 @@
+# Environnements virtuels
+venv/
+.env/
+.venv/
+
+# Fichiers compilés Python
+*.py[cod]
+__pycache__/
+*$py.class
+
+# Fichiers de configuration
+*.env
+*.local
+*.development
+*.production
+
+# Clés et certificats
+*.pem
+
+# Fichiers de base de données
+db.sqlite3
+
+# Fichiers de logs
+*.log
+
+# Fichiers statiques générés
+/staticfiles/
+/media/
+
+# Dossiers de l'IDE
+.vscode/
+.idea/
+
+# Fichiers de test coverage
+htmlcov/
+.coverage
+
+# Fichiers de migration (optionnel)
+**/migrations/*
+
+# Fichiers du système
+.DS_Store
+Thumbs.db
+
+# Fichiers temporaires
+*.swp
+*.swo
