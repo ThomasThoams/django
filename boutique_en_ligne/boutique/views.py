@@ -79,7 +79,6 @@ def retirer_du_panier(request, pk):
     try:
         panier = request.user.panier
     except ObjectDoesNotExist:
-        # Si l'utilisateur n'a pas de panier, rien à retirer
         return redirect('panier')
     panier_article = get_object_or_404(PanierArticle, panier=panier, article=article)
     panier_article.delete()
@@ -91,7 +90,6 @@ def payer(request):
     try:
         panier = request.user.panier
     except ObjectDoesNotExist:
-        # Si l'utilisateur n'a pas de panier, rien à payer
         return redirect('accueil')
     panier.panierarticle_set.all().delete()
     return redirect('accueil')
