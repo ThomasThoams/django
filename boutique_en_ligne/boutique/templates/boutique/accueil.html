@@ -27,47 +27,80 @@
             <br>
         <h1 class="title has-text-centered"> Bienvenue dans notre boutique en ligne </h1>
     </header>
-    
-    <h2 class="title is-size-2">Catégories</h2>
-    
-    <ul>
-        <li>
-            <a href="{% url 'accueil' %}"> Toutes </a>
-        </li>
-        {% include 'boutique/categorie_recursive.html' with categories=categories_parents %}
+        <br><br><br>
+    <div class="is-flex is-flex-direction-column" style="gap:20px;">
+        <div class="box m-auto" style="width:fit-content;">
+            <h2 class="title is-size-2">Catégories</h2>
+            <ul>
+                <li>
+                    <a href="{% url 'accueil' %}" class="button is-link is-outlined"> Toutes </a>
+                </li>
+                {% include 'boutique/categorie_recursive.html' with categories=categories_parents %}
 
+                <h2 class="title is-size-2"> Catégories </h2>
+                
+                <ul class="is-flex is-flex-wrap-wrap is-justify-content-center is-align-items-baseline">
+                    {% recursetree categories_parents %}
+                        <li>
+                            <a href="{% url 'accueil' %}?categorie={{ node.id }}">{{ node.nom }}</a>
+                            {% if not node.is_leaf_node %}
+                                <ul>
+                                    {{ children }}
+                                </ul>
+                            {% endif %}
+                        </li>
+                    {% endrecursetree %}
 
-    <h2>Catégories</h2>
-    <ul>
-        <li><a href="{% url 'accueil' %}">Toutes</a></li>
-        {% recursetree categories_parents %}
-            <li>
-                <a href="{% url 'accueil' %}?categorie={{ node.id }}">{{ node.nom }}</a>
-                {% if not node.is_leaf_node %}
-                    <ul>
-                        {{ children }}
-                    </ul>
-                {% endif %}
-            </li>
-        {% endrecursetree %}
-
-    </ul>
-
-    <h2 class="title is-size-2"> Articles </h2>
-    
-    <ul>
-        {% for article in articles %}
-            <li>
-                <a href="{% url 'article_detail' article.id %}">
-                    {% if article.image %}
-                        <img src="{{ article.image.url }}" alt="{{ article.nom }}" width="100">
-                    {% endif %}
-                    {{ article.nom }} - {{ article.prix }}€
-                </a>
-            </li>
-        {% empty %}
-            <li>Aucun article disponible.</li>
-        {% endfor %}
-    </ul>
+                </ul>
+            </ul>
+        </div>
+            <br><br>
+        <div class="container">
+            <h2 class="title is-size-2 has-text-centered"> Articles </h2>
+            <div class="is-flex is-flex-wrap-wrap is-justify-content-start is-align-items-center">
+                {% for article in articles %}
+                    <div class="card">
+                        <div class="card-image">
+                            <figure class="image is-4by3">
+                                {% if article.image %}
+                                    <img src="{{ article.image.url }}" alt="{{ article.nom }}"/>
+                                {% endif %}
+                            </figure>
+                        </div>
+                            <div class="card-content">
+                                <div class="media">
+                                    <div class="media-left">
+                                </div>
+                                <div class="media-content">
+                                    <p class="title is-4">
+                                        <a href="{% url 'article_detail' article.id %}">
+                                            {{ article.nom }} - {{ article.prix }}€
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                    
+                            <div class="content">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus neciaculis mauris.
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus neciaculis mauris.
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus neciaculis mauris.
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus neciaculis mauris.
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus neciaculis mauris.
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <article class="message is-warning m-auto">
+                        <div class="message-header">
+                            <p>Warning</p>
+                        </div>
+                        <div class="message-body">
+                            Aucun Article n'est disponnible Pour Le moment
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </body>
 </html>
