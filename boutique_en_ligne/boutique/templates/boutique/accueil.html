@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-<<<<<<< HEAD
+
     <header>
         <nav class="navbar">
             <div class="navbar-brand">
@@ -35,7 +35,7 @@
             <a href="{% url 'accueil' %}"> Toutes </a>
         </li>
         {% include 'boutique/categorie_recursive.html' with categories=categories_parents %}
-=======
+
     <h1>Bienvenue dans notre boutique de vêtements</h1>
     <nav>
         {% if user.is_authenticated %}
@@ -60,7 +60,7 @@
                 {% endif %}
             </li>
         {% endrecursetree %}
->>>>>>> c91e5e899b61647dddaea756191cdfd137ae5689
+
     </ul>
 
     <h2 class="title is-size-2"> Articles </h2>
