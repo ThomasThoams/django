@@ -5,12 +5,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 def accueil(request):
-    categories_parents = Categorie.objects.filter(parent__isnull=True).prefetch_related('sous_categories')
+    categories_parents = Categorie.objects.filter(parent__isnull=True)
     categorie_id = request.GET.get('categorie')
     if categorie_id:
         categorie_selectionnee = Categorie.objects.get(id=categorie_id)
-        sous_categories = categorie_selectionnee.get_descendants(include_self=True)
-        articles = Article.objects.filter(categorie__in=sous_categories)
+        articles = Article.objects.filter(categorie__in=categorie_selectionnee.get_descendants(include_self=True))
     else:
         articles = Article.objects.all()
     return render(request, 'boutique/accueil.html', {

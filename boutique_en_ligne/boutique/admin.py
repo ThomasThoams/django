@@ -1,9 +1,9 @@
 from django.contrib import admin
+from mptt.admin import MPTTModelAdmin
 from .models import Categorie, Article
 
-class CategorieAdmin(admin.ModelAdmin):
-    list_display = ('nom', 'parent')
-    list_filter = ('parent',)
+class CategorieAdmin(MPTTModelAdmin):
+    pass
 
 admin.site.register(Categorie, CategorieAdmin)
 admin.site.register(Article)
