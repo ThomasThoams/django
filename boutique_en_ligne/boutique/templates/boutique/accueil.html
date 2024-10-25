@@ -4,32 +4,7 @@
 {% block title %}Accueil - Boutique de Vêtements{% endblock %}
 
 {% block content %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Boutique de Vêtements</title>
-    <link rel="stylesheet" href="{% static 'bulma/css/bulma.css' %}">
-</head>
-<body>
-    <header>
-        <nav class="navbar is-black">
-            <div class="navbar-brand">
-                <!-- Votre logo ou nom de marque -->
-            </div>
-            <div class="navbar-end">
-                {% if user.is_authenticated %}
-                    <a href="{% url 'panier' %}"        class="navbar-item"> Panier      </a>
-                    <a href="{% url 'compte' %}"        class="navbar-item"> Mon compte  </a>
-                    <a href="{% url 'deconnexion' %}"   class="navbar-item"> Déconnexion </a>
-                {% else %}
-                    <a href="{% url 'connexion' %}"     class="navbar-item"> Connexion   </a>
-                    <a href="{% url 'inscription' %}"   class="navbar-item"> Inscription </a>
-                {% endif %}
-            </div>
-        </nav>
-
-        <h1 class="title has-text-centered"> Bienvenue dans notre boutique en ligne </h1>
-    </header>
+    <!-- Le contenu spécifique à la page d'accueil -->
     <h2 class="title is-size-2">Catégories</h2>
     <ul>
         <li>
@@ -37,6 +12,7 @@
         </li>
         {% include 'boutique/categorie_recursive.html' with categories=categories_parents %}
     </ul>
+
     <h2 class="title is-size-2"> Articles </h2>
     <ul>
         {% for article in articles %}
@@ -53,5 +29,3 @@
         {% endfor %}
     </ul>
 {% endblock %}
-</body>
-</html>
