@@ -4,14 +4,14 @@
 <html>
 <head>
     <title>Boutique de Vêtements</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'bulma/css/bulma.css' %}">
 </head>
 <body>
 
     <header>
-        <nav class="navbar">
+        <nav class="navbar is-black">
             <div class="navbar-brand">
-                
+                <img src="{% static 'protea.jpg'%}" style="width:80px; height:70px;">
             </div>
             <div class="navbar-end">
                 {% if user.is_authenticated %}
@@ -24,7 +24,7 @@
                 {% endif %}
             </div>
         </nav>
-
+            <br>
         <h1 class="title has-text-centered"> Bienvenue dans notre boutique en ligne </h1>
     </header>
     
@@ -36,17 +36,7 @@
         </li>
         {% include 'boutique/categorie_recursive.html' with categories=categories_parents %}
 
-    <h1>Bienvenue dans notre boutique de vêtements</h1>
-    <nav>
-        {% if user.is_authenticated %}
-            <a href="{% url 'panier' %}">Panier</a>
-            <a href="{% url 'compte' %}">Mon compte</a>
-            <a href="{% url 'deconnexion' %}">Déconnexion</a>
-        {% else %}
-            <a href="{% url 'connexion' %}">Connexion</a>
-            <a href="{% url 'inscription' %}">Inscription</a>
-        {% endif %}
-    </nav>
+
     <h2>Catégories</h2>
     <ul>
         <li><a href="{% url 'accueil' %}">Toutes</a></li>
