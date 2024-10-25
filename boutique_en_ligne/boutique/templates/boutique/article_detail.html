@@ -5,8 +5,12 @@
 </head>
 <body>
     <h1>{{ article.nom }}</h1>
+    {% if article.image %}
+        <img src="{{ article.image.url }}" alt="{{ article.nom }}" width="300">
+    {% endif %}
+    <p>Catégorie : {{ article.categorie }}</p>
     <p>{{ article.description }}</p>
-    <p>Prix: {{ article.prix }}€</p>
+    <p>Prix : {{ article.prix }} €</p>
     {% if user.is_authenticated %}
         <a href="{% url 'ajouter_au_panier' article.id %}">Ajouter au panier</a>
     {% else %}

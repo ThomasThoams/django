@@ -1,0 +1,10 @@
+{% if categories %}
+    <ul>
+        {% for categorie in categories %}
+            <li>
+                <a href="{% url 'accueil' %}?categorie={{ categorie.id }}">{{ categorie.nom }}</a>
+                {% include 'boutique/categorie_recursive.html' with categories=categorie.sous_categories.all %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
