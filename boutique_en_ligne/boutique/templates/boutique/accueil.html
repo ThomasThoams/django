@@ -1,4 +1,4 @@
-{% load static %}
+{% load mptt_tags %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +19,16 @@
     <h2>Catégories</h2>
     <ul>
         <li><a href="{% url 'accueil' %}">Toutes</a></li>
-        {% include 'boutique/categorie_recursive.html' with categories=categories_parents %}
+        {% recursetree categories_parents %}
+            <li>
+                <a href="{% url 'accueil' %}?categorie={{ node.id }}">{{ node.nom }}</a>
+                {% if not node.is_leaf_node %}
+                    <ul>
+                        {{ children }}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endrecursetree %}
     </ul>
     <h2>Articles</h2>
     <ul>
