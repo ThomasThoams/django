@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from mptt.models import MPTTModel, TreeForeignKey
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 class Categorie(MPTTModel):
     nom = models.CharField(max_length=100)
@@ -27,7 +29,7 @@ class Article(models.Model):
         return self.nom
 
 class Panier(models.Model):
-    utilisateur = models.OneToOneField(User, on_delete=models.CASCADE)
+    utilisateur = models.OneToOneField(User, on_delete=models.CASCADE, related_name='panier')
     articles = models.ManyToManyField(Article, through='PanierArticle') #faire plutot appel à l'article dans PanierArticle  pour avoir la quantité
 
     def __str__(self):
@@ -40,3 +42,8 @@ class PanierArticle(models.Model):
 
     def __str__(self):
         return f"{self.quantite} x {self.article.nom}"
+
+@receiver(post_save, sender=User)
+def creer_panier_utilisateur(sender, instance, created, **kwargs):
+    if created:
+        Panier.objects.create(utilisateur=instance)
