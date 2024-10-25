@@ -1,12 +1,13 @@
+{% load static %}
 {% load mptt_tags %}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Boutique en ligne</title>
-    <link rel="stylesheet" href="{% static 'bulma/css/bulma.css' %}">
+    <title>Boutique de Vêtements</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <h1>Bienvenue dans notre boutique en ligne</h1>
+    <h1>Bienvenue dans notre boutique de vêtements</h1>
     <nav>
         {% if user.is_authenticated %}
             <a href="{% url 'panier' %}">Panier</a>
