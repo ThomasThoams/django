@@ -2,10 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Boutique de Vêtements</title>
+    <title>Boutique en ligne</title>
+    <link rel="stylesheet" href="{% static 'bulma/css/bulma.css' %}">
 </head>
 <body>
-    <h1>Bienvenue dans notre boutique de vêtements</h1>
+    <h1>Bienvenue dans notre boutique en ligne</h1>
     <nav>
         {% if user.is_authenticated %}
             <a href="{% url 'panier' %}">Panier</a>
