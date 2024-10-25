@@ -5,17 +5,19 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 def accueil(request):
-    categories = Categorie.objects.all()
+    categories_parents = Categorie.objects.filter(parent__isnull=True).prefetch_related('sous_categories')
     categorie_id = request.GET.get('categorie')
     if categorie_id:
-        articles = Article.objects.filter(categorie_id=categorie_id)
+        categorie_selectionnee = Categorie.objects.get(id=categorie_id)
+        sous_categories = categorie_selectionnee.get_descendants(include_self=True)
+        articles = Article.objects.filter(categorie__in=sous_categories)
     else:
         articles = Article.objects.all()
-    return render(request, 'boutique/accueil.html', {'articles': articles, 'categories': categories})
+    return render(request, 'boutique/accueil.html', {
+        'articles': articles,
+        'categories_parents': categories_parents,
+    })
 
-def article_detail(request, pk):
-    article = get_object_or_404(Article, pk=pk)
-    return render(request, 'boutique/article_detail.html', {'article': article})
 
 def inscription(request):
     if request.method == 'POST':
@@ -42,6 +44,10 @@ def connexion(request):
 def deconnexion(request):
     logout(request)
     return redirect('accueil')
+
+def article_detail(request, pk):
+    article = get_object_or_404(Article, pk=pk)
+    return render(request, 'boutique/article_detail.html', {'article': article})
 
 @login_required
 def ajouter_au_panier(request, pk):

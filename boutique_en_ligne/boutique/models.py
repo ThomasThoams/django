@@ -1,11 +1,29 @@
 from django.db import models
 from django.contrib.auth.models import User
+from mptt.models import MPTTModel, TreeForeignKey
 
 class Categorie(models.Model):
     nom = models.CharField(max_length=100)
+    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='enfants')
+
+    class Meta:
+        verbose_name = "Catégorie"
+        verbose_name_plural = "Catégories"
+
+    class MPTTMeta:
+        order_insertion_by = ['nom']
 
     def __str__(self):
         return self.nom
+    
+    def get_descendants(self, include_self=False):
+        descendants = []
+        if include_self:
+            descendants.append(self)
+        sous_categories = self.sous_categories.all()
+        for sous_categorie in sous_categories:
+            descendants.extend(sous_categorie.get_descendants(include_self=True))
+        return descendants
 
 class Article(models.Model):
     nom = models.CharField(max_length=100)
@@ -19,7 +37,7 @@ class Article(models.Model):
 
 class Panier(models.Model):
     utilisateur = models.OneToOneField(User, on_delete=models.CASCADE)
-    articles = models.ManyToManyField(Article, through='PanierArticle')
+    articles = models.ManyToManyField(Article, through='PanierArticle') #faire plutot appel à l'article dans PanierArticle  pour avoir la quantité
 
     def __str__(self):
         return f"Panier de {self.utilisateur.username}"
