@@ -1,10 +1,10 @@
-{% comment %} {% if categories %} {% endcomment %}
-    <ul class="is-flex is-flex-wrap-wrap is-justify-content-center is-align-items-baseline">
-        {% for categorie in categories %}
-            <li>
-                <a href="{% url 'accueil' %}?categorie={{ categorie.id }}" class="button is-link is-outlined">{{ categorie.nom }}</a>
-                {% include 'boutique/categorie_recursive.html' with categories=categorie.sous_categories.all %}
-            </li>
-        {% endfor %}
-    </ul>
-{% comment %} {% endif %} {% endcomment %}
+{% for categorie in categories %}
+    <li>
+        <a href="{% url 'accueil' %}?categorie={{ categorie.id }}">{{ categorie.nom }}</a>
+        {% if categorie.get_children %}
+            <ul>
+                {% include 'boutique/categorie_recursive.html' with categories=categorie.get_children %}
+            </ul>
+        {% endif %}
+    </li>
+{% endfor %}
