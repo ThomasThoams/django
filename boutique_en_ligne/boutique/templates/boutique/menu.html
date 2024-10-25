@@ -1,0 +1,14 @@
+{% load mptt_tags %}
+
+<ul class="menu">
+    {% recursetree categories %}
+        <li class="menu-item">
+            <a href="{% url 'accueil' %}?categorie={{ node.id }}">{{ node.nom }}</a>
+            {% if not node.is_leaf_node %}
+                <ul class="submenu">
+                    {{ children }}
+                </ul>
+            {% endif %}
+        </li>
+    {% endrecursetree %}
+</ul>
