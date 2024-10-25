@@ -4,18 +4,26 @@
     <title>{{ article.nom }}</title>
 </head>
 <body>
-    <h1>{{ article.nom }}</h1>
+    <h1 class="title has-text-centered">{{ article.nom }}</h1>
+    
     {% if article.image %}
         <img src="{{ article.image.url }}" alt="{{ article.nom }}" width="300">
     {% endif %}
-    <p>Catégorie : {{ article.categorie }}</p>
-    <p>{{ article.description }}</p>
-    <p>Prix : {{ article.prix }} €</p>
+    
+    <p> Catégorie : {{ article.categorie }} </p>
+    <p> {{ article.description }}           </p>
+    <p> Prix : {{ article.prix }} €         </p>
+    
     {% if user.is_authenticated %}
-        <a href="{% url 'ajouter_au_panier' article.id %}">Ajouter au panier</a>
+        <a href="{% url 'ajouter_au_panier' article.id %}" class="is-button is-outlined is-info">
+            Ajouter au panier
+        </a>
     {% else %}
-        <p><a href="{% url 'connexion' %}">Connectez-vous</a> pour ajouter au panier.</p>
+        <p>
+            <a href="{% url 'connexion' %}" class="is-button is-outlined is-warning"> Connectez-vous </a>pour ajouter au panier!
+        </p>
     {% endif %}
-    <a href="{% url 'accueil' %}">Retour à l'accueil</a>
+    <br>
+    <a href="{% url 'accueil' %}" class="is-button is-outlined is-link"> Retour à l'accueil </a>
 </body>
 </html>

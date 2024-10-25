@@ -2,9 +2,11 @@
 <html>
 <head>
     <title>Mon Compte</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bulma/css/bulma.min.css' %}">
 </head>
 <body>
-    <h1>Bienvenue, {{ user.username }}</h1>
+    <h1 class="title has-text-centered"> Bienvenue, {{ user.username }}</h1>
     <p>Email: {{ user.email }}</p>
     <a href="{% url 'accueil' %}">Retour à l'accueil</a>
 </body>

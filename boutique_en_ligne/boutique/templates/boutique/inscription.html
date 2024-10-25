@@ -2,10 +2,12 @@
 <html>
 <head>
     <title>Inscription</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bulma/css/bulma.min.css' %}">
 </head>
 <body>
-    <h1>Inscription</h1>
-    <form method="post">
+    <h1 class="title has-text-centered">Inscription</h1>
+    <form method="post" class="box m-auto" style="width:fit-content;">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">S'inscrire</button>

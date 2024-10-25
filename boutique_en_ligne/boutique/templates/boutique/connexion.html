@@ -2,38 +2,41 @@
 <html>
 <head>
     <title>Connexion</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bulma/css/bulma.min.css' %}">
 </head>
+
 <body>
+    <br><br><br>
+    <h1 class="title has-text-centered"> Connexion </h1>
+    <form method="post" class="box m-auto" style="width:400px;">
+        <div class="m-auto">
+            <br>
+            <div class="field">
+                <label class="label" for="username"> Username </label>
+                <div class="control">
+                    <input class="input" type="text" placeholder="Ex: naahil34@gmail.com" name="username" required>
+                </div>
+            </div>
+                <br>
+            <div class="field">
+                <label class="label" for="password"> Password </label>
+                <div class="control">
+                    <input class="input" type="password" placeholder="*******" name="password" required>
+                </div>
+            </div>
+            
+            <div class="field is-grouped">
+                <div class="control">
+                    <button class="button is-primary">Se Connecter</button>
+                </div>
+            </div>
 
-    <form method="post">
-        <h1>Connexion</h1>
-        <div class="field">
-            <label class="label" for="username"> Username </label>
-            <div class="control has-icons-left has-icons-right">
-                <input class="input" type="text" placeholder="Text input" name="username" required>
+            <div>
+                <p>
+                    Pas encore de compte ? <a href="{% url 'inscription' %}">Inscrivez-vous</a>
+                </p>
             </div>
-        </div>
-
-        <div class="field">
-            <label class="label" for="password"> Password </label>
-            <div class="control has-icons-left has-icons-right">
-                <input class="input" type="password" placeholder="Text input" name="password" required>
-            </div>
-        </div>
-        
-        <div class="field is-grouped">
-            <div class="control">
-                <button class="button is-link">Submit</button>
-            </div>
-            <div class="control">
-                <button class="button is-link is-light">Cancel</button>
-            </div>
-        </div>
-
-        <div>
-            <p>
-                Pas encore de compte ? <a href="{% url 'inscription' %}">Inscrivez-vous</a>
-            </p>
         </div>
     </form>
 
