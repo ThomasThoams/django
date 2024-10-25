@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mon Panier</title>
+</head>
+<body>
+    <h1>Votre panier</h1>
+    <ul>
+        {% for item in articles %}
+            <li>
+                {{ item.article.nom }} x {{ item.quantite }} - {{ item.article.prix }}€ chacun
+                <a href="{% url 'retirer_du_panier' item.article.id %}">Retirer</a>
+            </li>
+        {% empty %}
+            <li>Votre panier est vide.</li>
+        {% endfor %}
+    </ul>
+    <p>Total: {{ total }}€</p>
+    <a href="{% url 'payer' %}">Payer</a>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ article.nom }}</title>
+</head>
+<body>
+    <h1>{{ article.nom }}</h1>
+    <p>{{ article.description }}</p>
+    <p>Prix: {{ article.prix }}€</p>
+    {% if user.is_authenticated %}
+        <a href="{% url 'ajouter_au_panier' article.id %}">Ajouter au panier</a>
+    {% else %}
+        <p><a href="{% url 'connexion' %}">Connectez-vous</a> pour ajouter au panier.</p>
+    {% endif %}
+    <a href="{% url 'accueil' %}">Retour à l'accueil</a>
+</body>
+</html>

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mon Compte</title>
+</head>
+<body>
+    <h1>Bienvenue, {{ user.username }}</h1>
+    <p>Email: {{ user.email }}</p>
+    <a href="{% url 'accueil' %}">Retour à l'accueil</a>
+</body>
+</html>
