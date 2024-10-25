@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Boutique en ligne{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bulma/css/bulma.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <nav class="navbar is-black">
+            <div class="navbar-brand">
+                <!-- Votre logo ou nom de marque -->
+            </div>
+            <div class="navbar-end">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'panier' %}"        class="navbar-item"> Panier      </a>
+                    <a href="{% url 'compte' %}"        class="navbar-item"> Mon compte  </a>
+                    <a href="{% url 'deconnexion' %}"   class="navbar-item"> Déconnexion </a>
+                {% else %}
+                    <a href="{% url 'connexion' %}"     class="navbar-item"> Connexion   </a>
+                    <a href="{% url 'inscription' %}"   class="navbar-item"> Inscription </a>
+                {% endif %}
+            </div>
+        </nav>
+
+        <!-- Inclusion du menu -->
+        {% include 'boutique/menu.html' %}
+    </header>
+
+    <!-- Contenu spécifique à chaque page -->
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

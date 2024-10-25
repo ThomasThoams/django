@@ -1,6 +1,9 @@
 {% load static %}
-{% extends 'base.html' %}
-{% block title %}Boutique de Vêtements{% endblock %}
+{% extends 'boutique/base.html' %}
+{% load mptt_tags %}
+
+{% block title %}Accueil - Boutique de Vêtements{% endblock %}
+
 {% block content %}
 <!DOCTYPE html>
 <html>
@@ -12,7 +15,7 @@
     <header>
         <nav class="navbar is-black">
             <div class="navbar-brand">
-                <!-- Votre logo ou nom de marque -->
+                <img src="{% static "portea.jpg" %}%}" alt="logo boutique">
             </div>
             <div class="navbar-end">
                 {% if user.is_authenticated %}
