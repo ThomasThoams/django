@@ -3,18 +3,31 @@
 <html>
 <head>
     <title>Boutique en ligne</title>
+    <link rel="stylesheet" href="{% static 'bulma/css/bulma.css' %}">
 </head>
 <body>
     <h1>Bienvenue dans notre boutique en ligne</h1>
-    <nav>
-        {% if user.is_authenticated %}
-            <a href="{% url 'panier' %}">Panier</a>
-            <a href="{% url 'compte' %}">Mon compte</a>
-            <a href="{% url 'deconnexion' %}">Déconnexion</a>
-        {% else %}
-            <a href="{% url 'connexion' %}">Connexion</a>
-            <a href="{% url 'inscription' %}">Inscription</a>
-        {% endif %}
+    <div class="navbar-menu">
+        <div class="navbar-start">
+            
+        </div>
+      
+        <div class="navbar-end">
+            {% if user.is_authenticated %}
+                <a href="{% url 'panier' %}">       Panier      </a>
+                <a href="{% url 'compte' %}">       Mon compte  </a>
+                <a href="{% url 'deconnexion' %}">  Déconnexion </a>
+            {% else %}
+                <a href="{% url 'connexion' %}">    Connexion   </a>
+                <a href="{% url 'inscription' %}">  Inscription </a>
+            {% endif %}
+        </div>
+    </div>
+
+
+
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        
     </nav>
     <h2>Catégories</h2>
     <ul>
